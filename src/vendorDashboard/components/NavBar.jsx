@@ -1,14 +1,25 @@
 import React from 'react'
 
-const NavBar = ({handleShowLogin, handleShowRegister}) => {
+const NavBar = ({handleShowLogin, handleShowRegister, showLogOut, handleLogOut}) => {
+  const firmName = localStorage.getItem('firmName');
   return (
     <div className="navSection">
         <div className="company">
             Vendor Dashboard
         </div>
+        <div>
+          <p>{firmName}</p>
+        </div>
         <div className="userAuth">
-            <span onClick={handleShowLogin}>Login</span>
-            <span onClick={handleShowRegister}>Register</span>
+
+          {!showLogOut ? (
+            <>
+              <span onClick={handleShowLogin}>Login</span>
+              <span onClick={handleShowRegister}>Register</span>
+            </>
+          ) : (
+              <span onClick={handleLogOut}>Logout</span>
+          )}
         </div>
     </div>
   )

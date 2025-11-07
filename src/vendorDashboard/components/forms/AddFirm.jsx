@@ -56,25 +56,34 @@ const AddFirm = () => {
       region.forEach((value) => {
         formData.append('region', value);
       });
-      console.log(...formData)
-    
-
+      
       const response = await fetch(`${API_URL}firm/add-firm`, {
         method: 'POST',
         headers: {
-          'token': `Bearer ${loginToken}`
+          'token': `${loginToken}`
         },
         body: formData
       });
-      console.log(response)
-      if (!response.ok) {
-        throw new Error('Failed to add firm');
-      }
-      console.log("1");
+
       const result = await response.json();
-      console.log("2");
-      console.log('Firm added successfully:', result);
-      alert('Firm added successfully');
+      if (response.ok) {
+          console.log('Firm added successfully:', result);
+          setFirmName('');
+          setArea('');
+          setCategory([]);
+          setRegion([]);
+          setOffer('');
+          setFile(null);
+          alert('Firm added successfully');
+      } else if (result.message === "Vendor can add only one firm") {
+          alert('Vendor can add only one firm');
+      } else {
+        alert('Failed to add firm');
+      }
+      const firmmId = result.firmmId;
+      console.log('Firm ID:', firmmId);
+
+      localStorage.setItem('firmmId', firmmId);
     } catch (error) {
       console.log('Error adding firm:', error);
       alert('Error adding firm');

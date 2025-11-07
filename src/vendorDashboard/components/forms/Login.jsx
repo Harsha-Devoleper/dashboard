@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import API_URL from '../../helpers/ApiPath';
 
-const Login = () => {
+const Login = ({ handleShowWelcome }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -24,7 +24,24 @@ const Login = () => {
         setEmail("");
         setPassword("");
         localStorage.setItem('vendorToken', data.token);
+        handleShowWelcome();
       }
+      const vendorId = data.vendorId;
+      console.log('Vendor ID:', vendorId);
+      const vendorResponse = await fetch(`${API_URL}vendor/single-vendor/${vendorId}`)
+      const vendorData = await vendorResponse.json();
+
+      if (vendorResponse.ok) {
+        const vendorFirmId = vendorData.vendorFirmId;
+        const vendorFirmName = vendorData.vendor.firm[0].firmName;
+        localStorage.setItem('firmmId', vendorFirmId);
+        localStorage.setItem('firmName', vendorFirmName);
+        window.location.reload();
+      }
+
+
+      
+    
     } catch (error) {
       console.log('Error during login:', error);
       // Handle login error (e.g., show an error message)
