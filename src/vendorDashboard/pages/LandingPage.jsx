@@ -23,13 +23,16 @@ const LandingPage = () => {
         const loginToken = localStorage.getItem('vendorToken');
         if (loginToken) {
             setShowLogOut(true);
+            setShowWelcome(true);
         };
     }, []);
 
     useEffect(() => {
         const firmName = localStorage.getItem('firmName');
-        if (firmName) {
+        const firmmId = localStorage.getItem('firmmId');
+        if (firmName || firmmId) {
             setShowFirmTitle(false);
+            setShowWelcome(true);
         }
     }, []);
 
@@ -40,6 +43,7 @@ const LandingPage = () => {
         setShowLogOut(false);
         alert('Logged out successfully');
         setShowFirmTitle(true);
+        setShowWelcome(false);
 
     }
 

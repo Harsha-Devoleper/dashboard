@@ -12,14 +12,14 @@ const NavBar = ({handleShowLogin, handleShowRegister, showLogOut, handleLogOut})
         </div>
         <div className="userAuth">
 
-          {!showLogOut ? (
+          {!showLogOut ? 
             <>
               <span onClick={handleShowLogin}>Login</span>
               <span onClick={handleShowRegister}>Register</span>
             </>
-          ) : (
+           : 
               <span onClick={handleLogOut}>Logout</span>
-          )}
+          }
         </div>
     </div>
   )
